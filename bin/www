@@ -7,7 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('jojos-server:server');
 var http = require('http');
-
+require('../models/index');
 /**
  * Get port from environment and store in Express.
  */
