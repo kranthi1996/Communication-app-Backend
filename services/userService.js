@@ -14,9 +14,9 @@ function addSecondsToDate(date, seconds) {
 async function sendOtpToMobileNumber(user_id, country_code, mobile_number) {
   /****Sms Gateway needs to be implemented****/
 
-  //1:20 secs time for verification otp
+  //Secs time for verification otp
   const now = new Date();
-  const expiration_time = addSecondsToDate(now, 80);
+  const expiration_time = addSecondsToDate(now, 300);
   const otp_obj = {
     user_id: user_id,
     otp: 123456,
