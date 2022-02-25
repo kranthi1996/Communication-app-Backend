@@ -1,7 +1,6 @@
-'use strict';
-const {
-  Model, Sequelize
-} = require('sequelize');
+"use strict";
+const { Model, Sequelize } = require("sequelize");
+const mobile_regExp = /^(\+\d{1,3}[- ]?)?\d{10}$/;
 module.exports = (sequelize, DataTypes) => {
   class users extends Model {
     /**
@@ -13,32 +12,36 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  users.init({
-    first_name: DataTypes.STRING,
-    last_name: DataTypes.STRING,
-    email: {
-      type:DataTypes.STRING,
-      validate: {
-        isEmail: true
-      }
+  users.init(
+    {
+      first_name: DataTypes.STRING,
+      last_name: DataTypes.STRING,
+      email: {
+        type: DataTypes.STRING,
+        validate: {
+          isEmail: true,
+        },
+      },
+      mobile_number: {
+        type: DataTypes.BIGINT,
+        validate: {
+          isNumeric: true,
+          is: mobile_regExp,
+        },
+      },
+      country_code: DataTypes.INTEGER,
+      time_zone: DataTypes.STRING,
+      gender: DataTypes.STRING,
+      user_type: DataTypes.STRING,
+      user_status: {
+        type: DataTypes.ENUM,
+        values: ["active", "pending"],
+      },
     },
-    mobile_number: {
-      type:DataTypes.BIGINT,
-      validate:{
-        isNumeric: true
-      }
-    },
-    country_code: DataTypes.INTEGER,
-    time_zone: DataTypes.STRING,
-    gender: DataTypes.STRING,
-    user_type: DataTypes.STRING,
-    user_status: {
-      type: DataTypes.ENUM,
-      values: ['active', 'pending'],
-    } 
-  }, {
-    sequelize,
-    modelName: 'users',
-  });
+    {
+      sequelize,
+      modelName: "users",
+    }
+  );
   return users;
 };

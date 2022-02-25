@@ -3,7 +3,7 @@
 const jwt = require('jsonwebtoken');
 const expressJwt = require('express-jwt');
 const compose = require('composable-middleware');
-const config = require('../config');
+const config = require('../config/index');
 const validateJwt = expressJwt({ secret: config.secrets.session , algorithms: ['HS256']});
 
 /**

@@ -8,7 +8,7 @@ router.get('/verify_token', authService.isAuthenticated(), (req,res)=>{
 });
 
 router.post('/mobile_auth', userController.create);
-router.post('/verify_code', userController.verifyCode);
+router.post('/verify/otp', userController.verifyOTP);
 
 
 
