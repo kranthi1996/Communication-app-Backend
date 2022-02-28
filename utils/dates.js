@@ -24,4 +24,8 @@ module.exports = {
       ? (a > b) - (a < b)
       : NaN;
   },
+  // To add seconds to the current time
+  addSecondsToDate: function (date, seconds) {
+    return new Date(date.getTime() + seconds * 1000);
+  },
 };

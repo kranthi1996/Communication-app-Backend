@@ -1,52 +1,52 @@
-'use strict';
+"use strict";
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('users', {
+    await queryInterface.createTable("users", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       first_name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       last_name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       email: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
-      mobile_number:{
-        type: Sequelize.BIGINT
+      mobile_number: {
+        type: Sequelize.BIGINT,
       },
-      country_code:{
-        type: Sequelize.INTEGER
+      country_code: {
+        type: Sequelize.INTEGER,
       },
-      time_zone:{
-        type: Sequelize.STRING
+      time_zone: {
+        type: Sequelize.STRING,
       },
-      gender:{
-        type:Sequelize.STRING
+      gender: {
+        type: Sequelize.STRING,
       },
-      user_type:{
-        type:Sequelize.STRING
+      user_type: {
+        type: Sequelize.STRING,
       },
-      user_status:{
-        type:Sequelize.ENUM,
-        values: ['active', 'pending']
+      user_status: {
+        type: Sequelize.ENUM,
+        values: ["active", "pending"],
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('users');
-  }
+    await queryInterface.dropTable("users");
+  },
 };
