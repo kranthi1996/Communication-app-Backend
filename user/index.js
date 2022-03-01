@@ -9,6 +9,7 @@ router.get("/verify/token", authService.validateToken, (req, res) => {
 });
 
 router.post("/mobile_auth", validator("mobile_auth"), userController.create);
-router.post("/verify/otp", validator("verify_otp"), userController.verifyOTP);
+router.post("/verify/otp", validator("verify_otp"), userController.verifyOtp);
+router.put("/details", authService.validateToken, userController.details);
 
 module.exports = router;

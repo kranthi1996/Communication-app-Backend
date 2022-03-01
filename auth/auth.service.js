@@ -44,7 +44,7 @@ exports.validateToken = function (req, res, next) {
           };
           return errorHandler(req, res, errorObj, 401);
         }
-        req.decoded = decoded;
+        req.user = decoded;
         next();
       });
     } else {

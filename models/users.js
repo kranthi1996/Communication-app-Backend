@@ -31,11 +31,23 @@ module.exports = (sequelize, DataTypes) => {
       },
       country_code: DataTypes.INTEGER,
       time_zone: DataTypes.STRING,
-      gender: DataTypes.STRING,
+      gender: {
+        type:DataTypes.ENUM,
+        values:["male", "female"]
+      },
       user_type: DataTypes.STRING,
       user_status: {
         type: DataTypes.ENUM,
         values: ["active", "pending"],
+      },
+      facebook:{
+        type: DataTypes.STRING
+      },
+      linkedin:{
+        type: DataTypes.STRING
+      },
+      instagram:{
+        type: DataTypes.STRING
       },
     },
     {

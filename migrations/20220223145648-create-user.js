@@ -27,7 +27,8 @@ module.exports = {
         type: Sequelize.STRING,
       },
       gender: {
-        type: Sequelize.STRING,
+        type: Sequelize.ENUM,
+        values:["male", "female"]
       },
       user_type: {
         type: Sequelize.STRING,
@@ -35,6 +36,15 @@ module.exports = {
       user_status: {
         type: Sequelize.ENUM,
         values: ["active", "pending"],
+      },
+      facebook:{
+        type:Sequelize.STRING
+      }, 
+      linkedin:{
+        type:Sequelize.STRING
+      },
+      instagram:{
+        type:Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

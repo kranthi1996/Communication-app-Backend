@@ -11,11 +11,18 @@ async function create(req, res) {
   }
   await userService.create(req, res);
 }
-async function verifyOTP(req, res, next) {
+async function verifyOtp(req, res) {
   const errors = await validationResult(req);
   if (!errors.isEmpty()) {
     return errorHandler(req, res, errors.errors[0], 422);
   }
-  await userService.verifyOTP(req, res, next);
+  await userService.verifyOtp(req, res);
 }
-module.exports = { create, verifyOTP };
+async function details(req, res) {
+  const errors = await validationResult(req);
+  if (!errors.isEmpty()) {
+    return errorHandler(req, res, errors.errors[0], 422);
+  }
+  await userService.details(req, res);
+}
+module.exports = { create, verifyOtp, details };

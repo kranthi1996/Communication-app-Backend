@@ -104,7 +104,7 @@ async function create(req, res) {
     errorHandler(req, res, errObj, 500);
   }
 }
-async function verifyOTP(req, res) {
+async function verifyOtp(req, res) {
   try {
     const { mobile_number, country_code, otp_details } = req.body;
     const user = await findUser(mobile_number, country_code);
@@ -157,7 +157,6 @@ async function verifyOTP(req, res) {
           return errorHandler(req, res, errObj, 401);
         }
       } catch (err) {
-        console.log(err);
         const errObj = { details: "Bad Request" };
         return errorHandler(req, res, errObj, 401);
       }
@@ -166,4 +165,48 @@ async function verifyOTP(req, res) {
     errorHandler(req, res, { msg: "Unknown error" }, 500);
   }
 }
-module.exports = { create, verifyOTP };
+async function details(req, res) {
+  try {
+    let userDetails = {};
+    const id = req.user._id;
+    if (req.body.name) {
+      userDetails.first_name = req.body.name;
+    }
+    if (req.body.email) {
+      userDetails.email = req.body.email;
+    }
+    if (req.body.gender) {
+      userDetails.gender = req.body.gender;
+    }
+    if (req.body.facebook) {
+      userDetails.facebook = req.body.facebook;
+    }
+    if (req.body.linkedin) {
+      userDetails.linkedin = req.body.linkedin;
+    }
+    if (req.body.instagram) {
+      userDetails.instagram = req.body.instagram;
+    }
+    const details = await userModel.update(userDetails, {
+      where: {
+        id: id,
+      },
+    });
+    if (details[0]) {
+      const user_details = await userModel.findOne({ id: id });
+      return responseSender(
+        req,
+        res,
+        { user: user_details },
+        200,
+        "User details saved."
+      );
+    } else {
+      return errorHandler(req, res, {}, 404, "No record modified.");
+    }
+  } catch (error) {
+    const errObj = { errObj: error };
+    return errorHandler(req, res, errObj, 500);
+  }
+}
+module.exports = { create, verifyOtp, details };
