@@ -194,7 +194,7 @@ async function details(req, res) {
       },
     });
     if (details[0]) {
-      const user_details = await userModel.findOne({ id: id });
+      const user_details = await userModel.findOne({ where: { id: id } });
       return responseSender(
         req,
         res,
