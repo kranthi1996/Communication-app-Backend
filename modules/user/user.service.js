@@ -1,11 +1,11 @@
 "use strict";
-const { users, otps } = require("../models");
-const userModel = users;
-const OtpModel = otps;
-const errorHandler = require("../utils/errorHandler");
-const responseSender = require("../utils/responseSender");
-const authService = require("../auth/auth.service");
-const dates = require("../utils/dates");
+const { User, Otp } = require("../../models");
+const userModel = User;
+const OtpModel = Otp;
+const errorHandler = require("../../utils/errorHandler");
+const responseSender = require("../../utils/responseSender");
+const authService = require("../../auth/auth.service");
+const dates = require("../../utils/dates");
 
 async function sendOtpToMobileNumber(user_id, country_code, mobile_number) {
   /****Sms Gateway needs to be implemented****/
@@ -100,8 +100,9 @@ async function create(req, res) {
       }
     }
   } catch (error) {
+    console.log(error)
     const errObj = { msg: error };
-    errorHandler(req, res, errObj, 500);
+    return errorHandler(req, res, errObj, 500);
   }
 }
 async function verifyOtp(req, res) {

@@ -7,3 +7,4 @@ module.exports.mobile = function (mobile) {
   const re = new RegExp(/^(\+\d{1,3}[- ]?)?\d{10}$/);
   return re.test(mobile);
 };
+

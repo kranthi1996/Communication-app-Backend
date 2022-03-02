@@ -8,3 +8,6 @@ npm start
 
 **To run the migrations**
 ./node_modules/.bin/sequelize db:migrate
+
+Node version ----- v16.13.2
+Express version -- 4.16.1
