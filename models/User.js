@@ -14,10 +14,14 @@ module.exports = (sequelize, DataTypes) => {
   }
   User.init(
     {
-      first_name: DataTypes.STRING,
+      first_name: {
+        type:DataTypes.STRING,
+        allowNull: false
+      },
       last_name: DataTypes.STRING,
       email: {
         type: DataTypes.STRING,
+        allowNull: false,
         validate: {
           isEmail: true,
         },
@@ -30,24 +34,28 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       country_code: DataTypes.INTEGER,
+      password: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+      },
       time_zone: DataTypes.STRING,
       gender: {
-        type:DataTypes.ENUM,
-        values:["male", "female"]
+        type: DataTypes.ENUM,
+        values: ["male", "female"],
       },
       user_type: DataTypes.STRING,
       user_status: {
         type: DataTypes.ENUM,
         values: ["active", "pending"],
       },
-      facebook:{
-        type: DataTypes.STRING
+      facebook: {
+        type: DataTypes.STRING,
       },
-      linkedin:{
-        type: DataTypes.STRING
+      linkedin: {
+        type: DataTypes.STRING,
       },
-      instagram:{
-        type: DataTypes.STRING
+      instagram: {
+        type: DataTypes.STRING,
       },
     },
     {

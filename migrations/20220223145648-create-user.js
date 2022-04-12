@@ -10,12 +10,14 @@ module.exports = {
       },
       first_name: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
       last_name: {
         type: Sequelize.STRING,
       },
       email: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
       mobile_number: {
         type: Sequelize.BIGINT,
@@ -25,6 +27,10 @@ module.exports = {
       },
       time_zone: {
         type: Sequelize.STRING,
+      },
+      password:{
+        type: Sequelize.STRING,
+        allowNull:false
       },
       gender: {
         type: Sequelize.ENUM,
@@ -36,6 +42,7 @@ module.exports = {
       user_status: {
         type: Sequelize.ENUM,
         values: ["active", "pending"],
+        defaultValue: "active"
       },
       facebook:{
         type:Sequelize.STRING

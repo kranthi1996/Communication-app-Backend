@@ -25,4 +25,27 @@ async function details(req, res) {
   }
   await userService.details(req, res);
 }
-module.exports = { create, verifyOtp, details };
+async function userRegister(req, res) {
+  const errors = await validationResult(req);
+  if (!errors.isEmpty()) {
+    return errorHandler(req, res, errors.errors[0], 422);
+  }
+  await userService.userRegister(req, res);
+}
+
+async function verifyEmail(req, res) {
+  // const errors = await validationResult(req);
+  // if (!errors.isEmpty()) {
+  //   return errorHandler(req, res, errors.errors[0], 422);
+  // }
+  await userService.verifyEmail(req, res);
+}
+
+async function login(req, res) {
+  // const errors = await validationResult(req);
+  // if (!errors.isEmpty()) {
+  //   return errorHandler(req, res, errors.errors[0], 422);
+  // }
+  await userService.login(req, res);
+}
+module.exports = { create, verifyOtp, details, userRegister, verifyEmail, login };

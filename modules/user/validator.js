@@ -23,6 +23,13 @@ function validator(type) {
           .isObject(),
       ];
     }
+    case "user_register": {
+      return [
+        check("name", "Name doesn't exists.").exists(),
+        check("email", "Email doesn't exists.").exists().isEmail(),
+        check("password", "Password doesn't exists.").exists(),
+      ];
+    }
   }
 }
 module.exports = { validator };
