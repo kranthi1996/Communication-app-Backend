@@ -11,7 +11,7 @@ const emailService = require("../../utils/emaiService");
 const randomstring = require("randomstring");
 const bcrypt = require("bcryptjs");
 
-async function sendOtpToEmail(user_id, email) {
+async function sendOtpToEmail(res, user_id, email) {
   const confirmationCode = randomstring.generate({
     length: 6,
     charset: "numeric",
@@ -23,7 +23,7 @@ async function sendOtpToEmail(user_id, email) {
     <p>Please confirm your email by clicking on the following link</p>
     <a href=http://localhost:4200/confirm/${confirmationCode}> Click here</a>
     </div>`,
-    function (err, response) {
+    async function (err, response) {
       if (err) {
         return res.status(401).send(err);
       }
@@ -31,13 +31,13 @@ async function sendOtpToEmail(user_id, email) {
         user_id: user_id,
         otp: confirmationCode,
       };
-      const otp = OtpModel.create(otp_obj);
+      const otp = await OtpModel.create(otp_obj);
       const details = {
         success: true,
         message: "Verification code has been sent to an email.",
         otp_id: otp.id,
       };
-      return details;
+      return res.status(200).send(details);
     }
   );
 }
@@ -61,12 +61,7 @@ async function userRegister(req, res) {
     const { name, email, password } = req.body;
     const userDetails = await findUser(email);
     if (userDetails) {
-      return errorHandler(
-        req,
-        res,
-        { message: "Email already existed." },
-        409,
-      );
+      return errorHandler(req, res, { message: "Email already existed." }, 409);
     } else {
       const encrypted_password = await encrypt(password);
 
@@ -76,14 +71,14 @@ async function userRegister(req, res) {
         password: encrypted_password,
       });
       if (user) {
-        const details = await sendOtpToEmail(user.id, email);
-        return responseSender(
-          req,
-          res,
-          details,
-          201,
-          "Verification code has been sent to an email."
-        );
+        const details = await sendOtpToEmail(res, user.id, email);
+          // return responseSender(
+          //   req,
+          //   res,
+          //   details,
+          //   201,
+          //   "Verification code has been sent to an email."
+          // );
       }
     }
   } catch (error) {
