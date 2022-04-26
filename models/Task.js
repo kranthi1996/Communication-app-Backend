@@ -9,6 +9,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      task.hasMany(models.taskUsers, {
+        foreignKey: 'task_id',
+        sourceKey: 'id'
+      });
     }
   }
   task.init(
@@ -24,6 +28,9 @@ module.exports = (sequelize, DataTypes) => {
       date:{
         type: DataTypes.DATE,
         allowNull: false,
+      },
+      time:{
+        type: DataTypes.STRING
       },
       description:{
         type: DataTypes.TEXT,

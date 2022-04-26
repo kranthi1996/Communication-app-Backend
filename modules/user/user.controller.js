@@ -48,4 +48,19 @@ async function login(req, res) {
   // }
   await userService.login(req, res);
 }
-module.exports = { create, verifyOtp, details, userRegister, verifyEmail, login };
+async function profileInfo(req, res) {
+  await userService.profileInfo(req, res);
+}
+async function updateProfileInfo(req, res) {
+  await userService.updateProfileInfo(req, res);
+}
+async function forgetPassword(req, res) {
+  await userService.forgetPassword(req, res);
+}
+async function updatePassword(req, res) {
+  await userService.updatePassword(req, res);
+}
+async function contactFeedback(req, res) {
+  await userService.contactFeedback(req, res);
+}
+module.exports = { create, verifyOtp, details, userRegister, verifyEmail, login, profileInfo,updateProfileInfo, forgetPassword, updatePassword, contactFeedback};

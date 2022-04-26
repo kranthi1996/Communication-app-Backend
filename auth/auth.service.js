@@ -27,7 +27,7 @@ exports.isAuthenticated = function () {
  * Returns a jwt token, signed by the app secret
  */
 exports.signToken = function (obj) {
-  return jwt.sign(obj, config.secrets.session, { expiresIn: 60 * 60 * 5 });
+  return jwt.sign(obj, config.secrets.session, { expiresIn: 60 * 60 * 24 });
 };
 
 exports.validateToken = function (req, res, next) {

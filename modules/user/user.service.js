@@ -1,7 +1,8 @@
 "use strict";
-const { User, Otp } = require("../../models");
+const { User, Otp, contact } = require("../../models");
 const userModel = User;
 const OtpModel = Otp;
+const contactModel = contact;
 const errorHandler = require("../../utils/errorHandler");
 const responseSender = require("../../utils/responseSender");
 const authService = require("../../auth/auth.service");
@@ -41,6 +42,23 @@ async function sendOtpToEmail(res, user_id, email) {
     }
   );
 }
+async function sendFeedbackToEmail(res, obj) {
+  const { subject, name, email, description } = obj;
+  emailService.sendMail(
+    "kranthimandava953@gmail.com",
+    `Web application feedback/issue`,
+    `<h2> ${subject} </h2>
+    <p> User name: ${name} -- EmailId: ${email}</p>
+    <p>${description}</p>
+    </div>`,
+    async function (err, response) {
+      if (err) {
+        return res.status(401).send(err);
+      }
+      return true;
+    }
+  );
+}
 async function findUser(email) {
   const userFound = await userModel.findOne({
     where: {
@@ -72,13 +90,6 @@ async function userRegister(req, res) {
       });
       if (user) {
         const details = await sendOtpToEmail(res, user.id, email);
-          // return responseSender(
-          //   req,
-          //   res,
-          //   details,
-          //   201,
-          //   "Verification code has been sent to an email."
-          // );
       }
     }
   } catch (error) {
@@ -89,11 +100,11 @@ async function userRegister(req, res) {
 
 async function verifyEmail(req, res) {
   try {
-    const { confirmation_code } = req.params;
+    const { confirmation_code } = req.body;
     if (confirmation_code) {
       const otp = await OtpModel.findOne({
         where: {
-          otp: req.params.confirmation_code,
+          otp: confirmation_code,
         },
       });
       if (!otp) {
@@ -146,7 +157,7 @@ async function login(req, res) {
             // response is OutgoingMessage object that server response http request
             return res.status(401).json({
               success: false,
-              message: "passwords do not match",
+              message: "Incorrect password",
             });
           }
         });
@@ -159,7 +170,156 @@ async function login(req, res) {
     errorHandler(req, res, { msg: "Unknown error" }, 500);
   }
 }
-module.exports = { userRegister, verifyEmail, login };
+async function profileInfo(req, res) {
+  try {
+    const current_user_email = req.user.email;
+    const profileInfo = await userModel.findOne({
+      where: {
+        email: current_user_email,
+      },
+    });
+    return responseSender(req, res, profileInfo, 200, "Profile info.");
+  } catch (error) {
+    errorHandler(req, res, { msg: "Unknown error" }, 500);
+  }
+}
+async function updateProfileInfo(req, res) {
+  try {
+    const current_user_email = req.user.email;
+    const current_user_id = req.user._id;
+    const {
+      first_name,
+      last_name,
+      email,
+      mobile_number,
+      address,
+      country_code,
+      time_zone,
+      facebook,
+      linkedin,
+      instagram,
+    } = req.body;
+    const profileInfo = await userModel.update(
+      {
+        first_name,
+        last_name,
+        email,
+        mobile_number,
+        address,
+        country_code,
+        time_zone,
+        facebook,
+        linkedin,
+        instagram,
+      },
+      {
+        where: {
+          id: current_user_id,
+          email: current_user_email,
+        },
+      }
+    );
+    if (profileInfo) {
+      return responseSender(
+        req,
+        res,
+        profileInfo,
+        200,
+        "Profile info updated."
+      );
+    }
+  } catch (error) {
+    return errorHandler(req, res, { msg: error }, 500);
+  }
+}
+async function forgetPassword(req, res) {
+  try {
+    const { email, password } = req.body;
+    const userFind = await userModel.findOne({
+      where: {
+        email: email,
+      },
+    });
+    if (userFind) {
+      const encrypted_password = await encrypt(password);
+      const pwsChange = await userModel.update(
+        {
+          password: encrypted_password,
+        },
+        {
+          where: {
+            email: email,
+          },
+        }
+      );
+      if (pwsChange) {
+        return responseSender(req, res, pwsChange, 200, "Password changed.");
+      }
+    } else {
+      return responseSender(req, res, {}, 404, "Email not found");
+    }
+  } catch (error) {
+    return errorHandler(req, res, { msg: error }, 500);
+  }
+}
+async function updatePassword(req, res) {
+  try {
+    const { password } = req.body;
+    const email = req.user.email;
+    const userFind = await userModel.findOne({
+      where: {
+        email: email,
+      },
+    });
+    if (userFind) {
+      const encrypted_password = await encrypt(password);
+      const pwsChange = await userModel.update(
+        {
+          password: encrypted_password,
+        },
+        {
+          where: {
+            email: email,
+          },
+        }
+      );
+      if (pwsChange) {
+        return responseSender(req, res, pwsChange, 200, "Password changed.");
+      }
+    } else {
+      return responseSender(req, res, {}, 404, "Email not found");
+    }
+  } catch (error) {
+    return errorHandler(req, res, { msg: error }, 500);
+  }
+}
+async function contactFeedback(req, res) {
+  try {
+    const { subject, name, email, description } = req.body;
+    const contact = await contactModel.create({
+      subject,
+      name,
+      email,
+      description,
+    });
+    if (contact) {
+      await sendFeedbackToEmail(res, req.body);
+      return responseSender(req, res, contact, 200, "Submitted, thanks.");
+    }
+  } catch (error) {
+    return errorHandler(req, res, { msg: error }, 500);
+  }
+}
+module.exports = {
+  userRegister,
+  verifyEmail,
+  login,
+  profileInfo,
+  updateProfileInfo,
+  forgetPassword,
+  updatePassword,
+  contactFeedback,
+};
 
 // async function sendOtpToMobileNumber(user_id, country_code, mobile_number) {
 //   /****Sms Gateway needs to be implemented****/

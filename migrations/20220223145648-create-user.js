@@ -44,6 +44,9 @@ module.exports = {
         values: ["active", "pending"],
         defaultValue: "active"
       },
+      address:{
+        type: Sequelize.JSON,
+      },
       facebook:{
         type:Sequelize.STRING
       }, 

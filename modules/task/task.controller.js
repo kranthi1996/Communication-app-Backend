@@ -7,4 +7,18 @@ async function createTask(req, res) {
     // }
     await taskService.createTask(req, res);
 }
-module.exports = {createTask}
+async function getTasks(req, res) {
+    // const errors = await validationResult(req);
+    // if (!errors.isEmpty()) {
+    //   return errorHandler(req, res, errors.errors[0], 422);
+    // }
+    await taskService.getTasks(req, res);
+}
+async function updateTaskUserStatus(req, res) {
+    // const errors = await validationResult(req);
+    // if (!errors.isEmpty()) {
+    //   return errorHandler(req, res, errors.errors[0], 422);
+    // }
+    await taskService.updateTaskUserStatus(req, res);
+}
+module.exports = {createTask, getTasks, updateTaskUserStatus}

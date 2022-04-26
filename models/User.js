@@ -48,6 +48,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.ENUM,
         values: ["active", "pending"],
       },
+      address:{
+        type: DataTypes.JSON,
+      },
       facebook: {
         type: DataTypes.STRING,
       },
