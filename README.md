@@ -1,5 +1,3 @@
-git clone https://github.com/team-jojos/jojos-backend-services.git
-
 **To install the node_modules**
 npm i 
 
