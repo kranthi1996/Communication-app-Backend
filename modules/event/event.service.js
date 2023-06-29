@@ -21,7 +21,6 @@ async function sendEmail(res, name, email) {
   );
 }
 async function createEvent(req, res) {
-  console.log(req.file);
   try {
     const {
       name,

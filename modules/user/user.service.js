@@ -180,7 +180,7 @@ async function profileInfo(req, res) {
     });
     return responseSender(req, res, profileInfo, 200, "Profile info.");
   } catch (error) {
-    errorHandler(req, res, { msg: "Unknown error" }, 500);
+    return errorHandler(req, res, { msg: "Unknown error" }, 500);
   }
 }
 async function updateProfileInfo(req, res) {

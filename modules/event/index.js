@@ -4,7 +4,7 @@ const eventController = require("./event.controller");
 const authService = require("../../auth/auth.service");
 const multer = require("multer");
 //const upload = multer({ dest: 'uploads/' });
-let upload = multer({ dest: "uploads/" });
+//let upload = multer({ dest: "uploads/" });
 //const { validator } = require("./validator");
 
 router.get(

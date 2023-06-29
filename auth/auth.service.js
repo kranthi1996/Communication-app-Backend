@@ -8,7 +8,7 @@ const errorHandler = require("../utils/errorHandler");
 
 const validateJwt = expressJwt({
   secret: config.secrets.session,
-  algorithms: ["HS256"],
+  algorithms: ["HS256"]
 });
 
 /**

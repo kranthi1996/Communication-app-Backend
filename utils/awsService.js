@@ -1,9 +1,9 @@
 "use strict";
 const AWS = require("aws-sdk");
-const ID = "AKIAV76FTYGGWP2EQQEE";
-const SECRET = "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";
+const ID = "";
+const SECRET = "";
 const BUCKET_NAME = "masters-project-bucket";
-const fs = require('fs');
+const fs = require("fs");
 const s3 = new AWS.S3({
   accessKeyId: ID,
   secretAccessKey: SECRET,
