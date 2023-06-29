@@ -3,7 +3,7 @@ require("dotenv").config();
 module.exports = {
   development: {
     username: "postgres",
-    password: "Kranthi@1996",
+    password: "",
     database: "myDb",
     host: "127.0.0.1",
     dialect: "postgres",
@@ -13,7 +13,7 @@ module.exports = {
   },
   test: {
     username: "postgres",
-    password: "Kranthi@1996",
+    password: "",
     database: "myDb",
     host: "127.0.0.1",
 
@@ -23,13 +23,13 @@ module.exports = {
     },
   },
   production: {
-    username: "kvfldwtszacuqs",
+    username: "",
     password:
-      "734d7559606aec93a2544d96affaa69a2f52812fef1450519e7ebd5a43aac746",
-    database: "daifk7hnm73snj",
-    host: "ec2-63-32-248-14.eu-west-1.compute.amazonaws.com",
+      "",
+    database: "",
+    host: "",
     port: 5432,
-    dialect: "postgres",
+    dialect: "",
     dialectOptions: {
       "ssl": {
         "rejectUnauthorized": false
